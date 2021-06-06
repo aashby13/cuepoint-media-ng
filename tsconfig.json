@@ -3,6 +3,16 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "cuepoint-media": [
+        "dist/cuepoint-media/cuepoint-media",
+        "dist/cuepoint-media"
+      ],
+      "cuipoint-media-ng": [
+        "dist/cuipoint-media-ng/cuipoint-media-ng",
+        "dist/cuipoint-media-ng"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

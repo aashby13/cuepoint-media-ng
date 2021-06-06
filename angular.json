@@ -3,5 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "cuepoint-media": {
+      "projectType": "library",
+      "root": "projects/cuepoint-media",
+      "sourceRoot": "projects/cuepoint-media/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/cuepoint-media/tsconfig.lib.json",
+            "project": "projects/cuepoint-media/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/cuepoint-media/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/cuepoint-media/src/test.ts",
+            "tsConfig": "projects/cuepoint-media/tsconfig.spec.json",
+            "karmaConfig": "projects/cuepoint-media/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/cuepoint-media/tsconfig.lib.json",
+              "projects/cuepoint-media/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "cuipoint-media-ng"
 }
