@@ -3,16 +3,55 @@ import { CuepointMediaData } from './typings';
 
 
 @Directive({
-  selector: '[libCuepointMedia]'
+  selector: '[a13CuepointMedia]'
 })
 export class CuepointMediaDirective implements OnChanges {
 
+  /**
+   * Emits cuepoint data when the media's currentTime matches the cuepoints time and cpListen is set to true.
+   * The cuepoint's optional function will execute at the same time as the event.
+   */
   @Output() cuepointEvent: EventEmitter<CuepointMediaData> = new EventEmitter();
-  @Input() listen!: boolean;
+
+  /**
+   * CuepointMediaData: { time: number,  kind: 'event' | 'nav' | 'both',  name: string,  func?: () => void }
+   * Cuepoints are automatically sorted by thier time property.
+   */
   @Input() cuepoints!: CuepointMediaData[];
+
+  /**
+   * EventListeners are added when set to true,  and eventListeners are removed when set to false.
+   */
+  @Input() cpListen!: boolean;
+
+  /**
+   * Time in seconds that is used to specify a range of time when a cuepoint can be detected and cuepointEvent emitted.
+   * 
+   * The timing of detecting cuepoints or navigating to a cuepoints specific time is not perfect. 
+   * Seeking can only happen on the media's comperssion key frames, and a key frame's time may not exacly match the cuepoint's time.
+   * Also, device playback capabilities can play a role.
+   * The default, 0.3, creates a large enough spread to work for most devices. 
+   * If cuepoints are missed, increase this number.
+   */
   @Input() tolerance = 0.3;
+
+  /**
+   * A cuepoint is searched for who's name matches this value when set, then, if found,
+   * the media's currentTime will seek the cuepoint's time and a cuepointEvent will emit.
+   * This will only work for cuepoints that have the kind property value is 'nav' or 'both'.
+   */
   @Input() goToName!: string;
+
+  /**
+   * If a cuepoint at the index exists the media's currentTime will seek the cuepoint's time and a cuepointEvent will emit.
+   * This will work for all cuepoints regardless of thier kind property's value.
+   */
   @Input() goToIndex!: number;
+
+  /**
+   * The media's currentTime will seek this number when set. 
+   * Does not loook a cuepoints time to match.
+   */
   @Input() goToTime!: number;
 
   private media!: HTMLMediaElement;
@@ -51,9 +90,9 @@ export class CuepointMediaDirective implements OnChanges {
       this.length = this.cuepoints.length;
     }
     //
-    if (changes.listen) {
-      if (this.listen && !this.hasListeners)  this.addListeners();
-      else if (!this.listen && this.hasListeners) this.removeListeners();
+    if (changes.cpListen) {
+      if (this.cpListen && !this.hasListeners)  this.addListeners();
+      else if (!this.cpListen && this.hasListeners) this.removeListeners();
     }
     //
     if (changes.goToName?.currentValue) {

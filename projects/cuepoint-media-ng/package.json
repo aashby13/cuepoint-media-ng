@@ -1,11 +1,33 @@
 {
   "name": "cuepoint-media-ng",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "peerDependencies": {
     "@angular/common": "^11.2.14",
     "@angular/core": "^11.2.14"
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aashby13/cuepoint-media-ng.git"
+  },
+  "keywords": [
+    "angular",
+    "directive",
+    "cuepoints",
+    "interactive",
+    "media",
+    "video",
+    "audio",
+    "HTMLMediaElement",
+    "HTMLVideoElement",
+    "HTMLAudioElement"
+  ],
+  "author": "Adam Ashby <dev@adamashby.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aashby13/cuepoint-media-ng/issues"
+  },
+  "homepage": "https://github.com/aashby13/cuepoint-media-ng#readme"
 }

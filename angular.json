@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/cuepoint-media-ng",
       "sourceRoot": "projects/cuepoint-media-ng/src",
-      "prefix": "lib",
+      "prefix": "a13",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

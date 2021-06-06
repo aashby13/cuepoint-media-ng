@@ -1,20 +1,64 @@
 # CuepointMediaNg
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.13.
+`npm i cuepoint-media-ng`
 
 ## How To Use
-```
-@Output() cuepointEvent: EventEmitter<CuepointMediaData> = new EventEmitter();
-@Input() listen!: boolean;
-@Input() cuepoints!: CuepointMediaData[];
-@Input() tolerance = 0.3;
-@Input() goToName!: string;
-@Input() goToIndex!: number;
-@Input() goToTime!: number;
-```
+`selector: '[a13CuepointMedia]'`
 
 
-## Example
+---
+`@Output() cuepointEvent: EventEmitter<CuepointMediaData> = new EventEmitter();`
+
+- Emits cuepoint data when the media's currentTime matches the cuepoints time and cpListen is set to true.
+- The cuepoint's optional function will execute at the same time as the event.
+- Nav cuepoints only trigger an emit when seeked, ie: goToName
+
+
+---
+`@Input() cuepoints!: CuepointMediaData[];`
+
+- CuepointMediaData: `{ time: number,  kind: 'event' | 'nav' | 'both',  name: string,  func?: () => void }`
+- Cuepoints are automatically sorted by thier time property.
+
+
+---
+`@Input() cpListen!: boolean;`
+
+- EventListeners are added when set to true and removed when set to false.
+
+
+---
+`@Input() tolerance = 0.3;`
+
+- Time in seconds that is used to specify a range of time when a cuepoint can be detected and cuepointEvent emitted.
+- The timing of detecting cuepoints or navigating to a cuepoints specific time is not perfect. 
+   * Seeking can only happen on the media's comperssion key frames, and a key frame's time may not exacly match the cuepoint's time.
+   * Also, device playback capabilities can play a role.
+   * The default, 0.3, creates a large enough spread to work for most devices. 
+   * If cuepoints are missed, increase this number.
+
+
+---
+`@Input() goToName!: string;`
+
+- A cuepoint is searched for who's name matches this value when set, then, if found, the media's currentTime will seek the cuepoint's time and a cuepointEvent will emit.
+- This will only work for cuepoints that have the kind property value is 'nav' or 'both'.
+
+
+---
+`@Input() goToIndex!: number;`
+- If a cuepoint at the index exists the media's currentTime will seek the cuepoint's time and a cuepointEvent will emit.
+- This will work for all cuepoints regardless of thier kind property's value.
+
+
+---
+`@Input() goToTime!: number;`
+- The media's currentTime will seek this number when set. 
+- Does not loook a cuepoints time to match.
+
+
+---
+## Simple Example Component
 ```
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CuepointMediaData } from 'cuepoint-media-ng';
@@ -26,9 +70,9 @@ import { CuepointMediaData } from 'cuepoint-media-ng';
       <video
         #video
         controls
-        libCuepointMedia
+        a13CuepointMedia
         [cuepoints]="cuepoints"
-        [listen]="listenForCP"
+        [cpListen]="listenForCP"
         [goToName]="seekName"
         [goToIndex]="seekIndex"
         (cuepointEvent)="onCuePoint($event)"
