@@ -134,10 +134,7 @@ export class CuepointMediaDirective implements OnInit, OnChanges {
         if (this.eventCuepoint !== this.curCuepoint && (this.eventCuepoint.kind === 'event' || this.eventCuepoint.kind === 'both')) {
           //
           if (this.media.currentTime >= this.eventCuepoint.time && this.media.currentTime < (this.eventCuepoint.time + this.tolerance)) {
-            //
-            if ((this.eventCuepoint.kind === 'event' || this.eventCuepoint.kind === 'both')) {
-              this.onCuepoint(this.eventCuepoint);
-            }
+            this.onCuepoint(this.eventCuepoint);
             break;
           }
         }
