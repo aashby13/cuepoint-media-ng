@@ -102,8 +102,8 @@ export class CuepointMediaDirective implements OnChanges {
     if (changes.goToIndex?.currentValue) {
       this.seekCuepoint(this.goToIndex);
     }
-    //
-    if (changes.goToTime?.currentValue) {
+    // string | number
+    if (changes.goToTime?.currentValue !== undefined) {
       this.media.currentTime = this.goToTime;
     }
   }
