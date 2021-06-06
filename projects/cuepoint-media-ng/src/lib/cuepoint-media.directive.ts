@@ -50,7 +50,7 @@ export class CuepointMediaDirective implements OnChanges {
 
   /**
    * The media's currentTime will seek this number when set. 
-   * Does not loook a cuepoints time to match.
+   * Does not look for a cuepoint's time to match.
    */
   @Input() goToTime!: number;
 
@@ -98,11 +98,11 @@ export class CuepointMediaDirective implements OnChanges {
     if (changes.goToName?.currentValue) {
       this.seekCuepoint(this.goToName);
     }
-    //
-    if (changes.goToIndex?.currentValue) {
+    // string | number
+    if (changes.goToIndex?.currentValue !== undefined) {
       this.seekCuepoint(this.goToIndex);
     }
-    // string | number
+    // number
     if (changes.goToTime?.currentValue !== undefined) {
       this.media.currentTime = this.goToTime;
     }

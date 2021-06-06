@@ -56,7 +56,7 @@ An Angular directive for HTML Media Elements that enables the use of cue points 
 ---
 `@Input() goToTime!: number;`
 - The media's currentTime will seek this number when set. 
-- Does not loook a cuepoints time to match.
+- Does not look for a cuepoint's time to match.
 
 
 ---
