@@ -1,5 +1,7 @@
 # CuepointMediaNg
 
+An Angular directive for HTML Media Elements that enables the use of cue points to trigger events via playback and time navigation.
+
 `npm i cuepoint-media-ng`
 
 ## How To Use
