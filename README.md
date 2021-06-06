@@ -61,6 +61,9 @@ An Angular directive for HTML Media Elements that enables the use of cue points 
 
 ---
 ## Simple Example Component
+
+[link to example repo](https://github.com/aashby13/test-project-cuepoint-media-ng)
+
 ```
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CuepointMediaData } from 'cuepoint-media-ng';
