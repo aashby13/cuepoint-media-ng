@@ -34,7 +34,7 @@ An Angular directive for HTML Media Elements that enables the use of cue points 
 
 - Time in seconds that is used to specify a range of time when a cuepoint can be detected and cuepointEvent emitted.
 - The timing of detecting cuepoints or navigating to a cuepoints specific time is not perfect. 
-   * Seeking can only happen on the media's comperssion key frames, and a key frame's time may not exacly match the cuepoint's time.
+   * Seeking can only happen on the media's compression key frames, and a key frame's time may not exactly match the cuepoint's time.
    * Also, device playback capabilities can play a role.
    * The default, 0.3, creates a large enough spread to work for most devices. 
    * If cuepoints are missed, increase this number.
@@ -44,12 +44,12 @@ An Angular directive for HTML Media Elements that enables the use of cue points 
 `@Input() goToName!: string;`
 
 - A cuepoint is searched for who's name matches this value when set, then, if found, the media's currentTime will seek the cuepoint's time and a cuepointEvent will emit.
-- This will only work for cuepoints that have the kind property value is 'nav' or 'both'.
+- This will only work for cuepoints where the kind property value is equal to 'nav' or 'both'.
 
 
 ---
 `@Input() goToIndex!: number;`
-- If a cuepoint at the index exists the media's currentTime will seek the cuepoint's time and a cuepointEvent will emit.
+- If a cuepoint at the index exists the media's currentTime will seek to the cuepoint's time and a cuepointEvent will emit.
 - This will work for all cuepoints regardless of thier kind property's value.
 
 
