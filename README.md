@@ -2,26 +2,114 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.13.
 
-## Development server
+## How To Use
+```
+@Output() cuepointEvent: EventEmitter<CuepointMediaData> = new EventEmitter();
+@Input() listen!: boolean;
+@Input() cuepoints!: CuepointMediaData[];
+@Input() tolerance = 0.3;
+@Input() goToName!: string;
+@Input() goToIndex!: number;
+@Input() goToTime!: number;
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Example
+```
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CuepointMediaData } from 'cuepoint-media-ng';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+@Component({
+  selector: 'app-root',
+  template: `
+    <div class="wrap">
+      <video
+        #video
+        controls
+        libCuepointMedia
+        [cuepoints]="cuepoints"
+        [listen]="listenForCP"
+        [goToName]="seekName"
+        [goToIndex]="seekIndex"
+        (cuepointEvent)="onCuePoint($event)"
+        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+      </video>
 
-## Build
+      <div class="btn-wrap">
+        <button (click)="incrementIndex()">Index++</button>
+        <button (click)="gotToCuepoint('Two')">Go To Cuepoint Two</button>
+        <button (click)="gotToCuepoint('Four')">Go To Cuepoint Four</button>
+        <button (click)="gotToCuepoint('Five')">Go To Cuepoint Five</button>
+      </div>
+    </div>
+  `,
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+  @ViewChild('video', {static: true}) videoRef!: ElementRef;
+  cuepoints!: CuepointMediaData[];
+  listenForCP = true;
+  seekName!: string;
+  seekIndex = -1;
 
-## Running unit tests
+  constructor() {}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  ngOnInit(): void {
+    this.cuepoints = [
+      {
+        name: 'One',
+        time: 10,
+        kind: 'event',
+        func: () => console.log('This is cuepoint One. EVENT!')
+      },
+      {
+        name: 'Two',
+        time: 20,
+        kind: 'both',
+        func: () => console.log('This is cuepoint Two. BOTH!')
+      },
+      {
+        name: 'Three',
+        time: 30,
+        kind: 'event',
+        func: () => {
+          (this.videoRef.nativeElement as HTMLVideoElement).pause();
+          setTimeout(() => {
+            alert('This is cuepoint Three. EVENT!')
+          }, 1000);
+        }
+      },
+      {
+        name: 'Four',
+        time: 120,
+        kind: 'nav',
+        func: () => console.log('This is cuepoint Four. NAV!')
+      },
+      {
+        name: 'Five',
+        time: 460,
+        kind: 'both',
+        func: () => console.log('This is cuepoint Five. BOTH!')
+      }
+    ];
+  }
 
-## Running end-to-end tests
+  onCuePoint(cp: CuepointMediaData): void {
+    console.log(cp);
+  }
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  gotToCuepoint(name: string): void {
+    this.seekName = name;
+  }
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  incrementIndex(): void {
+    if (this.seekIndex === this.cuepoints.length-1) {
+      this.seekIndex = 0;
+    } else {
+      this.seekIndex++;
+    }
+    console.log(this.seekIndex);
+  }
+}
+```
