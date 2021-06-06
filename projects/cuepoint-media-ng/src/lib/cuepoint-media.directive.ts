@@ -13,6 +13,7 @@ export class CuepointMediaDirective implements OnChanges {
   @Input() tolerance = 0.3;
   @Input() goToName!: string;
   @Input() goToIndex!: number;
+  @Input() goToTime!: number;
 
   private media!: HTMLMediaElement;
   private hasListeners = false;
@@ -59,9 +60,12 @@ export class CuepointMediaDirective implements OnChanges {
       this.seekCuepoint(this.goToName);
     }
     //
-    //
-    if (changes.goToID?.currentValue) {
+    if (changes.goToIndex?.currentValue) {
       this.seekCuepoint(this.goToIndex);
+    }
+    //
+    if (changes.goToTime?.currentValue) {
+      this.media.currentTime = this.goToTime;
     }
   }
 
