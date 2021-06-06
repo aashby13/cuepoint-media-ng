@@ -4,13 +4,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "cuepoint-media": [
-        "dist/cuepoint-media/cuepoint-media",
-        "dist/cuepoint-media"
-      ],
-      "cuipoint-media-ng": [
-        "dist/cuipoint-media-ng/cuipoint-media-ng",
-        "dist/cuipoint-media-ng"
+      "cuepoint-media-ng": [
+        "dist/cuepoint-media-ng/cuepoint-media-ng",
+        "dist/cuepoint-media-ng"
       ]
     },
     "outDir": "./dist/out-tsc",
