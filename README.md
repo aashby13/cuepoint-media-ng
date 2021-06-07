@@ -38,6 +38,7 @@ An Angular directive for HTML Media Elements that enables the use of cue points 
    * Also, device playback capabilities can play a role.
    * The default, 0.3, creates a large enough spread to work for most devices. 
    * If cuepoints are missed, increase this number.
+- **IMPORTANT**: Distance between cuepoint times must be more than the defined tolerance.
 
 
 ---

@@ -32,6 +32,7 @@ export class CuepointMediaDirective implements OnChanges {
    * Also, device playback capabilities can play a role.
    * The default, 0.3, creates a large enough spread to work for most devices. 
    * If cuepoints are missed, increase this number.
+   * Distance between cuepoint times must be more than the defined tolerance.
    */
   @Input() tolerance = 0.3;
 
