@@ -85,7 +85,7 @@ export class CuepointMediaDirective implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log('CuepointMediaDirective.ngOnChanges)', changes);
+    //console.log('CuepointMediaDirective.ngOnChanges)', changes);
     if (changes.cuepoints?.currentValue) {
       this.cuepoints.sort((a, b) => a.time - b.time);
       this.length = this.cuepoints.length;
@@ -107,10 +107,11 @@ export class CuepointMediaDirective implements OnChanges {
     if (changes.goToTime?.currentValue !== undefined) {
       this.media.currentTime = this.goToTime;
     }
+    
   }
 
   private onCuepoint(cuepoint: CuepointMediaData): void {
-    // console.log('CuepointMediaDirective.onCuepoint()', cuepoint);
+    //console.log('CuepointMediaDirective.onCuepoint()', cuepoint);
     this.curCuepoint = cuepoint;
     this.cuepointEvent.emit(cuepoint);
     if (cuepoint.func) cuepoint.func.apply(window, []);
@@ -119,14 +120,14 @@ export class CuepointMediaDirective implements OnChanges {
   }
 
   private seekCuepoint(nameOrIndex: string | number): void {
-    /* console.log('CuepointMediaDirective.seekCuepoint()', nameOrIndex; */
+    //console.log('CuepointMediaDirective.seekCuepoint()', nameOrIndex);
     this.navCuepoint = typeof nameOrIndex === 'string' 
       ? this.cuepoints.find(cp => cp.name === nameOrIndex) 
       : this.cuepoints[nameOrIndex];
-    //
-    if (this.navCuepoint?.kind === 'nav' || this.navCuepoint?.kind === 'both' || typeof nameOrIndex === 'number') {
+
+    if (this.navCuepoint && (this.navCuepoint?.kind === 'nav' || this.navCuepoint?.kind === 'both' || typeof nameOrIndex === 'number')) {
       this.mode = 'nav';
-      if (this.navCuepoint) this.media.currentTime = this.navCuepoint.time;
+      this.media.currentTime = this.navCuepoint.time;
     } else {
       this.navCuepoint = undefined;
     }
@@ -136,7 +137,7 @@ export class CuepointMediaDirective implements OnChanges {
    *  "seeked" event unreliable on Android add "seeking" listener to help out
    */
   private addListeners(): void {
-    // console.log('CuepointMediaDirective.addListeners()');
+    //console.log('CuepointMediaDirective.addListeners()');
     this.hasListeners = true;
     this.media.addEventListener('seeked', this.seekedCallback, false);
     if (this.isAndroid) this.media.addEventListener('seeking', this.seekedCallback, false);
@@ -146,7 +147,7 @@ export class CuepointMediaDirective implements OnChanges {
   }
 
   private removeListeners(): void {
-    // console.log('CuepointMediaDirective.removeListeners()');
+    //console.log('CuepointMediaDirective.removeListeners()');
     this.hasListeners = false;
     this.media.removeEventListener('seeked', this.seekedCallback);
     this.media.removeEventListener('seeking', this.seekedCallback);
@@ -155,7 +156,7 @@ export class CuepointMediaDirective implements OnChanges {
   }
 
   private onMediaSeeked(): void {
-    // console.log('CuepointMediaDirective.onMediaSeeked()');
+    //console.log('CuepointMediaDirective.onMediaSeeked()');
     if (this.mode === 'nav' && this.navCuepoint) this.navTimer = window.setInterval(() => this.onNavTimer(), 17);
   }
 
@@ -171,13 +172,14 @@ export class CuepointMediaDirective implements OnChanges {
   }
 
   private onMediaPlaying(): void {
-    // console.log('CuepointMediaDirective.onMediaPlaying()');
+    //console.log('CuepointMediaDirective.onMediaPlaying()');
     if (this.curCuepoint && this.curCuepoint.time > (this.media.currentTime + this.tolerance)) this.curCuepoint = undefined;
     if (this.hasListeners) this.rafID = requestAnimationFrame(this.updateCallback);
 
   }
 
   private update(): void {
+    //console.log('update', this.mode);
     if (this.media.paused || this.media.ended) return;
     //
     if (this.length && this.mode === 'event') {
